@@ -1,0 +1,118 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar bg-info">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24">
+        <span class="text-white">
+          Online Course List
+        </span>
+      </a>
+    </div>
+  </nav>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" style="height: 250px;">
+        <img src="{% static 'src\header3.png' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" style="height: 250px;">
+        <img src="{% static 'src\header2.png' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" style="height: 250px;">
+        <img src="{% static 'src\header1.png' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="container-fluid row">
+    <div class="container col-md-12">
+      <h1>Find Courses offered by all organizations over here!!!</h1>
+      <hr>
+    </div>
+    <div class="container col-md-12">
+      <button type="button" class="btn btn-outline-primary" id="filter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill"
+          viewBox="0 0 16 16">
+          <path
+            d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z" />
+        </svg>
+        Filter
+      </button>
+    </div>
+    <div class="col-md-3 border-end" id="filter-fields">
+      <form action="/filter_volun" method="post" class="bg-white my-3 px-3 py-3 text-secondary container w-90">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="full_name" class="form-label">Course Name</label>
+          <input type="text" class="form-control" id="full_name" value="{{ full_name }}" name="full_name"
+            aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="dept" class="form-label">Organization</label>
+          <input type="text" class="form-control" id="dept" value="{{ dept }}" name="dept" aria-describedby="emailHelp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Apply</button>
+      </form>
+    </div>
+    <div class="col-md-9 row p-3" id="courses">
+      <div class="col-md-12" id="course-list">
+        {% for c in courses %}
+        <a class="card text-decoration-none shadow border-0 my-2">
+          <div class="card-body">
+            <h5 class="card-title text-dark">{{c.course_name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Offered By {{c.organization.org_name}}</h6>
+            <p class="card-text text-secondary">{{c.description}}</p>
+            <p class="card-text">Duration - {{c.duration}} Months</p>
+            <h6 class="card-text text-muted">Rs. {{c.price}}</h6>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+</body>
+<script>
+  $(document).ready(function () {
+    $("#filter").click(function () {
+      $("#filter-fields").toggle();
+      $('#courses').toggleClass("col-md-12 col-md-9");
+    });
+  });
+</script>
+</html>
