@@ -1,6 +1,6 @@
 import React from 'react'
 import SingleCourse from './SingleCourse'
-import { useTransition } from 'react'
+// import { useTransition } from 'react'
 
 const CourseList = props => {
 

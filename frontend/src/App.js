@@ -1,9 +1,9 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import header1 from './images/header1.png'
 import header2 from './images/header2.png'
 import header3 from './images/header3.png'
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useEffect } from 'react'
 import CourseList from './Components/CourseList';
 
 
@@ -36,53 +36,53 @@ function App() {
    //Set state of courses
   const [courses, setcourses] = useState([])
 
-  const coursels = [
-    {
-      course_name: "ABC",
-      price: 1000,
-      duration: 12,
-      organization: {
-        org_name: "org1",
-        contact: 224243442,
-        email: "rwrwr@mail.com"
-      },
-      description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
-    },
-    {
-      course_name: "GHI",
-      price: 1200,
-      duration: 12,
-      organization: {
-        org_name: "org1",
-        contact: 224243442,
-        email: "rwrwr@mail.com"
-      },
-      description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
-    },
-    {
-      course_name: "DEF",
-      price: 1300,
-      duration: 12,
-      organization: {
-        org_name: "org1",
-        contact: 224243442,
-        email: "rwrwr@mail.com"
-      },
-      description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
-    },
-    {
-      course_name: "XYZ",
-      price: 1030,
-      duration: 12,
-      organization: {
-        org_name: "org1",
-        contact: 224243442,
-        email: "rwrwr@mail.com"
-      },
-      description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
-    }
+  // const coursels = [
+  //   {
+  //     course_name: "ABC",
+  //     price: 1000,
+  //     duration: 12,
+  //     organization: {
+  //       org_name: "org1",
+  //       contact: 224243442,
+  //       email: "rwrwr@mail.com"
+  //     },
+  //     description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
+  //   },
+  //   {
+  //     course_name: "GHI",
+  //     price: 1200,
+  //     duration: 12,
+  //     organization: {
+  //       org_name: "org1",
+  //       contact: 224243442,
+  //       email: "rwrwr@mail.com"
+  //     },
+  //     description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
+  //   },
+  //   {
+  //     course_name: "DEF",
+  //     price: 1300,
+  //     duration: 12,
+  //     organization: {
+  //       org_name: "org1",
+  //       contact: 224243442,
+  //       email: "rwrwr@mail.com"
+  //     },
+  //     description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
+  //   },
+  //   {
+  //     course_name: "XYZ",
+  //     price: 1030,
+  //     duration: 12,
+  //     organization: {
+  //       org_name: "org1",
+  //       contact: 224243442,
+  //       email: "rwrwr@mail.com"
+  //     },
+  //     description: "Online Courses from the Best Professionals, Share your Projects and find a job. Boost your skills and learn with tips and techniques from top experts."
+  //   }
 
-  ]
+  // ]
 
   //orgs
   const [orgs, setorgs] = useState([])
@@ -95,7 +95,7 @@ function App() {
   //filtered course list to store final list after filtering data
   const [filteredCourses, setFilteredCourses] = useState(courses)
   //transition for running heavy functions
-  const [isPending, startTransition] = useTransition()
+  // const [isPending, startTransition] = useTransition()
 
 
   const orgChecks = orgs.map(org => <div className="form-check fs-5">
