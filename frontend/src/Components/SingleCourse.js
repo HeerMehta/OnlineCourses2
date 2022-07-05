@@ -4,7 +4,7 @@ const SingleCourse = props => {
 
   console.log(props.org[0])
     return(
-        <a className="card text-decoration-none shadow border-0 my-2">
+        <a className="card text-decoration-none shadow border-0 my-2" href='#'>
           <div className="card-body">
             <h5 className="card-title text-dark">{props.course.course_name}</h5>
             <h6 className="card-subtitle mb-2 text-muted">Offered By {props.org[0].org_name}</h6>

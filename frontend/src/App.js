@@ -120,7 +120,7 @@ const handleOrgFilter = (e) => {
     newOrgFilter.splice(index, 1)
     setorgFilter(newOrgFilter)
 
-    let newCourses = filteredCourses.filter(course => course.organization != e.target.value)
+    let newCourses = filteredCourses.filter(course => course.organization !== e.target.value)
 
     setFilteredCourses(newCourses)
 
@@ -142,7 +142,7 @@ const filterCourses = ()=>{
       for(let i=0; i<orgFilter.length; i++){
         let newCourses = []
         let id = orgFilter[i]
-        newCourses = courses.filter(course => course.organization == id);
+        newCourses = courses.filter(course => course.organization === id);
         tempCourseList1 = tempCourseList1.concat(newCourses);
       }
       
@@ -161,7 +161,7 @@ const filterCourses = ()=>{
       if(tempCourseList2.length > 0 && tempCourseList1.length >0){
         tempCourseList1 = tempCourseList1.filter(course => tempCourseList2.includes(course));
       }
-      else if(tempCourseList1.length == 0){
+      else if(tempCourseList1.length === 0){
         tempCourseList1 = tempCourseList2;
       }
 
@@ -199,7 +199,7 @@ const handlePriceFilter = (e) => {
 
 
   const handleShowFilter = () => {
-    if (showfilters == true) {
+    if (showfilters === true) {
       setshowfilters(false)
     }
     else {
