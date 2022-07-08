@@ -6,10 +6,10 @@ const CourseList = props => {
 
 
     function filterById(obj, id){
-            return obj.filter((obj) => obj.id === id)
+            return obj.filter((obj) => obj._id === id)
     }
 
-    const courses = props.courses.map((course) => <SingleCourse key={course.name} course={course} org={filterById(props.orgs, course.organization)}/>)
+    const courses = props.courses.map((course) => <SingleCourse key={course._id} course={course} org={filterById(props.orgs, course.org_id)}/>)
 
     return(
         <div className="col-md-12">

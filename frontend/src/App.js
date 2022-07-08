@@ -1,37 +1,41 @@
-// import logo from './logo.svg';
 import './App.css';
 import header1 from './images/header1.png'
 import header2 from './images/header2.png'
 import header3 from './images/header3.png'
 import { useState, useEffect } from 'react'
 import CourseList from './Components/CourseList';
+import { db } from "./Firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 
 
 function App() {
 
-  //Fetch data of all orgs
-  useEffect(() => {
-    fetch(`http://localhost:8000/api/orgs/`)
-     .then((response) => response.json())
-     .then((actualData) => {
-      console.log(actualData)
-       setorgs(actualData)
-     })
-     .catch(err => console.log(err));
-   }, []);
+  
+  const orgsCollectionRef = collection(db, "orgs");
+  const coursesCollectionRef = collection(db, "courses");
 
-   //Fetch data of all courses
   useEffect(() => {
-    fetch(`http://localhost:8000/api/courses/`)
-     .then((response) => response.json())
-     .then((actualData) => {
-      console.log(actualData)
-       setcourses(actualData)
-       setFilteredCourses(actualData)
-     })
-     .catch(err => console.log(err));
-   }, []);
+    const getOrgs = async () => {
+      const data = await getDocs(orgsCollectionRef);
+      setorgs(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+      console.log(orgs)
+    };
+
+    getOrgs();
+  }, []);
+
+  useEffect(() => {
+    const getCourses = async () => {
+      const data = await getDocs(coursesCollectionRef);
+      setFilteredCourses(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+      setcourses(data.docs.map(doc => ({...doc.data(), id: doc.id})))
+      console.log(orgs)
+    };
+
+    getCourses();
+  }, []);
+
   
    //Set state of courses
   const [courses, setcourses] = useState([])
@@ -94,14 +98,13 @@ function App() {
   const [priceFilter, setPriceFilter] = useState([])
   //filtered course list to store final list after filtering data
   const [filteredCourses, setFilteredCourses] = useState(courses)
-  //transition for running heavy functions
-  // const [isPending, startTransition] = useTransition()
+
 
 
   const orgChecks = orgs.map(org => <div className="form-check fs-5">
-  <input className="form-check-input" type="checkbox" value={org.id} id="flexCheckDefault" onClick={e => handleOrgFilter(e)} />
+  <input className="form-check-input" type="checkbox" value={org._id} id="flexCheckDefault" onClick={e => handleOrgFilter(e)} />
   <label className="form-check-label" htmlFor="flexCheckDefault">
-    {org.org_name}
+    {org.name}
   </label>
 </div>)
 
@@ -120,10 +123,9 @@ const handleOrgFilter = (e) => {
     newOrgFilter.splice(index, 1)
     setorgFilter(newOrgFilter)
 
-    let newCourses = filteredCourses.filter(course => course.organization !== e.target.value)
+    let newCourses = filteredCourses.filter(course => course.org_id !== e.target.value)
 
     setFilteredCourses(newCourses)
-
     console.log(orgFilter);
   }
 
@@ -142,7 +144,8 @@ const filterCourses = ()=>{
       for(let i=0; i<orgFilter.length; i++){
         let newCourses = []
         let id = orgFilter[i]
-        newCourses = courses.filter(course => course.organization === id);
+        console.log("This is filfr", id)
+        newCourses = courses.filter(course => course.org_id == id);
         tempCourseList1 = tempCourseList1.concat(newCourses);
       }
       
@@ -153,21 +156,24 @@ const filterCourses = ()=>{
       for(let i=0; i<priceFilter.length; i++){
         let newCourses = []
         let p = priceFilter[i]
-        newCourses = filteredCourses.filter(course => course.price <= p);
+        newCourses = courses.filter(course => course.price <= p);
         tempCourseList2 = tempCourseList2.concat(newCourses);
         console.log(tempCourseList2);
       }
 
-      if(tempCourseList2.length > 0 && tempCourseList1.length >0){
+      if(tempCourseList2.length > 0 && tempCourseList1.length > 0){
         tempCourseList1 = tempCourseList1.filter(course => tempCourseList2.includes(course));
       }
       else if(tempCourseList1.length === 0){
-        tempCourseList1 = tempCourseList2;
+        setFilteredCourses(tempCourseList2);
+      }
+      else{
+        setFilteredCourses(tempCourseList1);
       }
 
       // tempCourseList1 = tempCourseList1.filter(course => tempCourseList2.includes(course));
 
-      setFilteredCourses(tempCourseList1);
+      
   }
 
 }
